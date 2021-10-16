@@ -2,9 +2,11 @@ import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
     return (
-        <div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui voluptatum quod nihil ducimus id voluptas tempora rerum aut consequuntur,
-            praesentium corporis iusto, itaque repudiandae, magni provident magnam? Quos, nulla qui.
+        <div className="bg-gray-600 w-full min-h-screen flex justify-center items-center">
+            <div className="text-white w-6/12 text-center">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita consequuntur accusantium veritatis aliquam sequi, neque voluptatem
+                vitae similique quos praesentium impedit cum qui alias libero dolores, enim maxime facere modi!
+            </div>
         </div>
     );
 };

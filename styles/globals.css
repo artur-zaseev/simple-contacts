@@ -3,3 +3,14 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+html, body, #__next, .app {
+    width: 100%;
+    height: 100%;
+}
+
+body {background-color: aquamarine;}
+
+#__next {background-color: blue;}
+
+.app {background-color: bisque;}
