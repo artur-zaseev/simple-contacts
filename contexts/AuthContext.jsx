@@ -1,33 +1,43 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth, providers } from '../utils/firebase';
+import { signInWithRedirect, signOut as firebaseSignOut, setDoc, getDoc, onAuthStateChanged } from '../utils/firebase';
 
 const AuthContext = createContext();
 
-export const useAuth = () => {
-    return useContext(AuthContext);
-};
-
-export const AuthProvider = ({ children }) => {
+function AuthProvider({ children }) {
+    const [user, setUser] = useState();
     const [loading, setLoading] = useState(true);
-    const [currentUser, setCurrentUser] = useState();
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(auth, (data) => {
-            setCurrentUser(user);
-            setLoading(false);
+        return onAuthStateChanged((authUser) => {
+            if (authUser) {
+                setUser(authUser);
+                setLoading(false);
+            }
         });
-        return unsubscribe;
-    }, [auth]);
+    }, []);
 
-    const loginWithGoogle = () => auth.signInWithRedirect(providers.google);
+    function signIn() {
+        return signInWithRedirect();
+    }
 
-    const logout = () => auth.signOut();
+    function signOut() {
+        setUser(undefined);
+        return firebaseSignOut();
+    }
 
-    const value = {
-        currentUser,
-        loginWithGoogle,
-        logout,
-    };
+    const value = { user, loading, signIn, signOut };
 
-    return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
-};
+    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+}
+
+function useAuth() {
+    const context = useContext(AuthContext);
+
+    if (context === null) {
+        throw new Error('useAuth must be used within an AuthProvider');
+    }
+
+    return context;
+}
+
+export { AuthContext, AuthProvider, useAuth };

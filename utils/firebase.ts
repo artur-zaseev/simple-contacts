@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getAuth, signInWithRedirect, signOut, GoogleAuthProvider, FacebookAuthProvider, onAuthStateChanged } from 'firebase/auth';
+import * as firebaseAuth from 'firebase/auth';
+import * as firestore from 'firebase/firestore';
 
 const app = initializeApp({
     apiKey: process.env.NEXT_PUBLIC_ENV_API_KEY,
@@ -11,16 +11,26 @@ const app = initializeApp({
     appId: process.env.NEXT_PUBLIC_ENV_APP_ID,
 });
 
-const providers = {
-    google: new GoogleAuthProvider(),
-    facebook: new FacebookAuthProvider(),
-};
+const auth = firebaseAuth.getAuth(app);
+const db = firestore.getFirestore(app);
+const googleProvider = new firebaseAuth.GoogleAuthProvider();
 
-const db = getFirestore(app);
-const auth = getAuth(app);
+export function signInWithRedirect() {
+    return firebaseAuth.signInWithRedirect(auth, googleProvider);
+}
 
-export const firebaseHelpers = {
-    auth,
-    providers,
-    db,
-};
+export function onAuthStateChanged(callback: (user: firebaseAuth.User | null) => void) {
+    return firebaseAuth.onAuthStateChanged(auth, callback);
+}
+
+export function signOut() {
+    return firebaseAuth.signOut(auth);
+}
+
+export function setDoc(path: string, pathSegments: string[], data: any) {
+    return firestore.setDoc(firestore.doc(firestore.collection(db, path), ...pathSegments), data);
+}
+
+export function getDoc(path: string, pathSegments: string[]) {
+    return firestore.getDoc(firestore.doc(db, path, ...pathSegments));
+}
