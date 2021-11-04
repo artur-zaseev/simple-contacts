@@ -1,14 +1,11 @@
 import type { NextPage } from 'next';
-
-import { useAuth } from '@/contexts/AuthContext';
 import { useEffect } from 'react';
 
-const Home: NextPage = () => {
-    const { user, signIn, signOut } = useAuth();
+import { Header } from '@/components';
+import { useAuth } from '@/contexts';
 
-    useEffect(() => {
-        !!user && console.log('user', user);
-    }, [user]);
+const Home: NextPage = () => {
+    const { user, signIn } = useAuth();
 
     if (!user) {
         return (
@@ -21,11 +18,8 @@ const Home: NextPage = () => {
     }
 
     return (
-        <div className="bg-gray-600 w-full min-h-screen flex flex-col justify-center items-center text-white text-center">
-            <button onClick={() => signOut()} className="px-3 py-1 border uppercase my-3">
-                sign-Out
-            </button>
-
+        <div className="bg-gray-600 w-full min-h-screen flex flex-col  text-white text-center">
+            <Header />
             <div>
                 <strong>Email:</strong>
                 <br /> {user.email}

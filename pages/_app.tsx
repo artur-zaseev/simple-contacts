@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 
 import 'antd/dist/antd.css';
 
-import { AuthProvider } from '../contexts/AuthContext';
+import { AuthProvider } from '@/contexts';
 
 import '../styles/globals.css';
 import 'tailwindcss/tailwind.css';
