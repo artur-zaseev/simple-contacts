@@ -1,40 +1,16 @@
 import type { NextPage } from 'next';
 import { useEffect } from 'react';
 
-import { Header } from '@/components';
+import { Header, UserInfo } from '@/components';
 import { useAuth } from '@/contexts';
 
 const Home: NextPage = () => {
     const { user, signIn } = useAuth();
-
-    if (!user) {
-        return (
-            <div className="bg-gray-600 w-full min-h-screen flex flex-col justify-center items-center text-white text-center">
-                <button onClick={() => signIn()} className="px-3 py-1 border uppercase my-3">
-                    sign-In
-                </button>
-            </div>
-        );
-    }
-
     return (
-        <div className="bg-gray-600 w-full min-h-screen flex flex-col  text-white text-center">
+        <div className="h-full flex flex-col">
             <Header />
-            <div>
-                <strong>Email:</strong>
-                <br /> {user.email}
-            </div>
-            <div>
-                <strong>Name:</strong>
-                <br /> {user.displayName}
-            </div>
-            <div>
-                <strong>Uid:</strong>
-                <br />
-                {user.uid}
-            </div>
-            <div>
-                <img src={user.photoURL} alt="" className="rounded-full" />
+            <div className="bg-gray-500 flex-1 flex justify-center items-center">
+                <UserInfo user={user} signIn={signIn} />
             </div>
         </div>
     );
