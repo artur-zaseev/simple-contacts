@@ -6,7 +6,7 @@ import { decrement, increment } from '@store/slices/counter';
 
 const Home: NextPage = () => {
     const dispatch = useDispatch();
-    const { counter } = useSelector((state: RootState) => state);
+    const { counter, user } = useSelector((state: RootState) => state);
 
     return (
         <div className="flex flex-col justify-center items-center min-h-screen">
@@ -21,6 +21,8 @@ const Home: NextPage = () => {
                     increment
                 </button>
             </div>
+
+            <div>User: {user.name}</div>
         </div>
     );
 };

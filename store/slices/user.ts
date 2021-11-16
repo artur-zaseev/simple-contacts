@@ -4,7 +4,7 @@ export interface IUserSlice {
     name: string;
 }
 
-const initialState: IUserSlice = { name: '' };
+const initialState: IUserSlice = { name: 'Test Name' };
 
 const userSlice = createSlice({
     name: 'user',
