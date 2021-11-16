@@ -1,26 +1,26 @@
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
+import { Provider } from 'react-redux';
 
 import 'antd/dist/antd.css';
 
-import { AuthProvider } from '../contexts/AuthContext';
+import { store } from '@store/index';
 
 import '../styles/globals.css';
 import 'tailwindcss/tailwind.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
-        <AuthProvider>
+        <Provider store={store}>
             <div className="app">
                 <Head>
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                    <link rel="icon" href="/favicon.ico" />
                     <meta name="theme-color" content="#333333" />
                     <title>Simple Contacts</title>
                 </Head>
                 <Component {...pageProps} />
             </div>
-        </AuthProvider>
+        </Provider>
     );
 }
 export default MyApp;

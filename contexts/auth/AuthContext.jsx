@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { signInWithRedirect, signOut as firebaseSignOut, setDoc, getDoc, onAuthStateChanged } from '../utils/firebase';
+
+import { signInWithRedirect, signOut as firebaseSignOut, onAuthStateChanged } from '@/utils/firebase';
 
 const AuthContext = createContext();
 

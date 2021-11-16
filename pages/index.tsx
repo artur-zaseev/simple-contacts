@@ -1,47 +1,28 @@
 import type { NextPage } from 'next';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { useAuth } from '@/contexts/AuthContext';
-import { useEffect } from 'react';
+import { RootState } from '@/store';
+import { decrement, increment } from '@store/slices/counter';
 
 const Home: NextPage = () => {
-    const { user, signIn, signOut } = useAuth();
-
-    useEffect(() => {
-        !!user && console.log('user', user);
-    }, [user]);
-
-    if (!user) {
-        return (
-            <div className="bg-gray-600 w-full min-h-screen flex flex-col justify-center items-center text-white text-center">
-                <button onClick={() => signIn()} className="px-3 py-1 border uppercase my-3">
-                    sign-In
-                </button>
-            </div>
-        );
-    }
+    const dispatch = useDispatch();
+    const { counter, user } = useSelector((state: RootState) => state);
 
     return (
-        <div className="bg-gray-600 w-full min-h-screen flex flex-col justify-center items-center text-white text-center">
-            <button onClick={() => signOut()} className="px-3 py-1 border uppercase my-3">
-                sign-Out
-            </button>
+        <div className="flex flex-col justify-center items-center min-h-screen">
+            <div className="text-6xl">Counter</div>
+            <div className="text-4xl my-10">{counter.value}</div>
 
             <div>
-                <strong>Email:</strong>
-                <br /> {user.email}
+                <button className="border border-black px-4 py-1 rounded-lg mr-5" onClick={() => dispatch(decrement())}>
+                    decrement
+                </button>
+                <button className="border border-black px-4 py-1 rounded-lg" onClick={() => dispatch(increment())}>
+                    increment
+                </button>
             </div>
-            <div>
-                <strong>Name:</strong>
-                <br /> {user.displayName}
-            </div>
-            <div>
-                <strong>Uid:</strong>
-                <br />
-                {user.uid}
-            </div>
-            <div>
-                <img src={user.photoURL} alt="" className="rounded-full" />
-            </div>
+
+            <div>User: {user.name}</div>
         </div>
     );
 };
