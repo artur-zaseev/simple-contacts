@@ -2,11 +2,12 @@ import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 
-import 'antd/dist/antd.css';
+import { UserControl } from '@components/UserControl';
 
 import { store } from '@store/index';
 
 import '../styles/globals.css';
+import 'antd/dist/antd.css';
 import 'tailwindcss/tailwind.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -18,7 +19,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                     <meta name="theme-color" content="#333333" />
                     <title>Simple Contacts</title>
                 </Head>
-                <Component {...pageProps} />
+                <UserControl>
+                    <Component {...pageProps} />
+                </UserControl>
             </div>
         </Provider>
     );
